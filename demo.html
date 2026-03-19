@@ -1,0 +1,30 @@
+
+<div id="app">
+  <h1>听写练习</h1>
+  <button onclick="playWord()">听单词</button>
+  <input type="text" id="userInput" placeholder="输入你听到的词">
+  <button onclick="check()">检查</button>
+  <p id="result"></p>
+</div>
+
+<script>
+  const word = "Ambitious"; // 以后可以从你的 JSON 词库里随机取
+  
+  function playWord() {
+    const msg = new SpeechSynthesisUtterance(word);
+    msg.lang = 'en-US';
+    window.speechSynthesis.speak(msg);
+  }
+
+  function check() {
+    const input = document.getElementById('userInput').value;
+    const feedback = document.getElementById('result');
+    if(input.toLowerCase() === word.toLowerCase()) {
+      feedback.innerText = "✅ 正确！太棒了！";
+      feedback.style.color = "green";
+    } else {
+      feedback.innerText = "❌ 再试一次吧。";
+      feedback.style.color = "red";
+    }
+  }
+</script>

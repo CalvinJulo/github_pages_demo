@@ -26,3 +26,9 @@ Site generator
 ### Vocabulary review
 
 ### Datamuse
+- https://www.datamuse.com/
+- https://www.onelook.com/
+- 
+
+
+

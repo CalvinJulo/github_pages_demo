@@ -1,0 +1,9 @@
+
+- publisher: "Oxford"
+  title: "English File"
+  desc: "强调听说能力的成人教材。"
+  cover: "https://example.com/oxford_cover.jpg"
+- publisher: "Cambridge"
+  title: "Grammar in Use"
+  desc: "全球最畅销的语法书。"
+  cover: "https://example.com/cambridge_cover.jpg"

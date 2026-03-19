@@ -10,4 +10,4 @@ Deployment solution
 - github pages
 
 Site generator
-- Jekyll
+- Jekyll, which is a site model that could be filled the customized content.

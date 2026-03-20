@@ -1,1 +1,53 @@
 
+<div id="datamuse-section" style="margin-bottom: 30px; font-family: 'Inter', sans-serif;">
+    <!-- # head -->
+
+    <h2 style="border-bottom: 2px solid #007bff; padding-bottom: 10px; color: #2d3436; font-size: 1.5rem;">🔍 Section 2: Smart Lexicon</h2>
+
+    
+
+    <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
+        <div class="lex-capsule active-mode" data-mode="ml">
+            Means like
+            <div class="lex-q">?
+                <div class="lex-tooltip"><b>Meaning:</b> Finds words with a similar meaning.</div>
+            </div>
+        </div>
+        
+        <div class="lex-capsule" data-mode="rel_jja">
+            Adj for Noun
+            <div class="lex-q">?
+                <div class="lex-tooltip"><b>Rel_jja:</b> Popular adjectives used to modify the noun.</div>
+            </div>
+        </div>
+
+        <div class="lex-capsule" data-mode="rel_trg">
+            Triggers
+            <div class="lex-q">?
+                <div class="lex-tooltip"><b>Rel_trg:</b> Words statistically associated with the query.</div>
+            </div>
+        </div>
+        
+        </div>
+
+    <div style="display: flex; gap: 0; margin-bottom: 30px;">
+        <input type="text" id="dm-input" placeholder="Enter word to explore relations..." 
+               style="flex: 1; padding: 12px; border: 1px solid #ddd; border-radius: 4px 0 0 4px; outline: none;">
+        <button onclick="runDatamuse()" style="padding: 0 25px; background: #28a745; color: white; border: none; border-radius: 0 4px 4px 0; cursor: pointer;">EXPLORE</button>
+    </div>
+
+    <div id="dm-results" style="display: flex; flex-wrap: wrap; gap: 8px;">
+        </div>
+</div>
+
+<style>
+    .dm-word-box {
+        background: #e9ecef;
+        padding: 8px 15px;
+        border-radius: 3px;
+        font-size: 0.9rem;
+        cursor: pointer;
+        position: relative;
+    }
+    .dm-word-box:hover { background: #dee2e6; }
+</style>

@@ -21,9 +21,34 @@
             <span class="lex-label">Wildcard Search</span>
             <div class="lex-q">?
                 <div class="lex-tooltip" style="width: 360px;">
-                    <strong>Patterns:</strong><br>
-                    <code>blue*</code> (start) | <code>*bird</code> (end) | <code>bl????rd</code> (fixed length)<br>
-                    <code>//fuljyo</code> (unscramble) | <code>#</code> (cons.) | <code>@</code> (vowel)
+                    <div style="text-align: center; font-weight: 700; font-size: 1rem; margin-bottom: 15px;">How to search</div>
+                    <ul style="list-style: none; padding: 0; margin: 0 0 20px 0; display: table; width: 100%;">
+                        <li style="display: table-row;"><code class="code-example">bluebird</code><span class="desc">Get definitions of <i class="var">bluebird</i></span></li>
+                        <li style="display: table-row;"><code class="code-example">blue*</code><span class="desc">List words that start with <i class="var">blue</i></span></li>
+                        <li style="display: table-row;"><code class="code-example">*bird</code><span class="desc">...that end with <i class="var">bird</i></span></li>
+                        <li style="display: table-row;"><code class="code-example">bl????rd</code><span class="desc">...that start with <i class="var">bl</i>, end with <i class="var">rd</i>, with 4 letters in between</span></li>
+                        <li style="display: table-row;"><code class="code-example">//fuljyo</code><span class="desc">...that have the letters "fuljyo"</span></li>
+                        <li style="display: table-row;"><code class="code-example">?????,*y*</code><span class="desc">...that have 5 letters and contain a "y"</span></li>
+                        <li style="display: table-row;"><code class="code-example">bl*:snow</code><span class="desc">...that start with <i class="var">bl</i> and have a meaning related to <i class="var">snow</i></span></li>
+                        <li style="display: table-row;"><code class="code-example">:snow</code><span class="desc">List words related to <i class="var">snow</i></span></li>
+                        <li style="display: table-row;"><code class="code-example">:winter sport</code><span class="desc">...related to the concept <i class="var">winter sport</i></span></li>
+                        <li style="display: table-row;"><code class="code-example">**winter**</code><span class="desc">Phrases that contain the word <i class="var">winter</i></span></li>
+                        <li style="display: table-row;"><code class="code-example">expand:nasa</code><span class="desc">Phrases that spell out <i class="var">n.a.s.a.</i></span></li>
+                    </ul>
+
+                    <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 15px 0;">
+
+                    <div style="text-align: center; font-weight: 700; margin-bottom: 12px;">Pattern symbols</div>
+                    <div style="text-align: center; display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">
+                        <span><code>?</code> any letter</span>
+                        <span><code>*</code> any number of letters</span>
+                        <span><code>#</code> consonant</span>
+                        <span><code>@</code> vowel</span>
+                        <span><code>-abcd</code> disallow letters</span>
+                        <span><code>+abcd</code> restrict to letters</span>
+                        <span><code>//abcd//</code> unscramble</span>
+                        <span><code>pattern:meaning</code></span>
+                    </div>
                 </div>
             </div>
         </div>

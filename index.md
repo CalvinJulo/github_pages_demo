@@ -7,6 +7,6 @@ title: English Learning Hub
 
 ## Table of Contents
 
-1. [📚 English Textbook Library](./library)
-2. [✍️ Vocabulary Practice Lab](./practice)
-3. [Dictionary](./dictionary)
+1. [📚 English Textbook Library](.function/library)
+2. [✍️ Vocabulary Practice Lab](.function/practice)
+3. [Dictionary](.function/dictionary)

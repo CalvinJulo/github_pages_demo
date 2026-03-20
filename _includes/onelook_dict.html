@@ -11,54 +11,62 @@ title: Datamuse & OneLook Hub
 
     
     <!-- # introduction -->
-<div class="feature-nav-container" style="display: flex; gap: 20px; margin: 15px 0; border-bottom: 1px solid #eee; padding-bottom: 15px;">
+<div class="minimal-nav" style="display: flex; gap: 30px; align-items: center; padding: 10px 0; border-bottom: 1px solid #f0f0f0; margin-bottom: 20px;">
         
-        <div class="nav-item">
-            <span class="nav-label">Dictionary Aggregator</span>
-            <div class="nav-tooltip">
-                <strong>Aggregator</strong><br>
-                Instant access to Oxford, Cambridge, Collins, and 100+ authoritative sources in one view.
+        <div class="nav-group">
+            <span class="main-link">Dictionary Aggregator</span>
+            <div class="help-trigger">?
+                <div class="info-popover">
+                    <strong>Aggregator</strong><br>
+                    Aggregated results from Oxford, Cambridge, Merriam-Webster, and 100+ sources.
+                </div>
             </div>
         </div>
 
-        <div class="nav-item">
-            <span class="nav-label">Wildcard Search</span>
-            <div class="nav-tooltip" style="width: 450px;">
-                <strong>How to Search Patterns:</strong><br>
-                <code class="rule">blue*</code>: Starts with "blue"<br>
-                <code class="rule">*bird</code>: Ends with "bird"<br>
-                <code class="rule">bl????rd</code>: Starts with "bl", ends with "rd", 4 letters between<br>
-                <code class="rule">//fuljyo</code>: Unscramble letters "fuljyo"<br>
-                <code class="rule">?????,*y*</code>: 5 letters and contains a "y"<br><br>
-                <strong>Symbols:</strong><br>
-                <code>?</code> any letter | <code>*</code> any letters | <code>#</code> consonant | <code>@</code> vowel<br>
-                <code>-abcd</code> disallow letters | <code>+abcd</code> restrict to letters
+        <div class="nav-group">
+            <span class="main-link">Wildcard Search</span>
+            <div class="help-trigger">?
+                <div class="info-popover" style="width: 400px;">
+                    <strong>How to Search Patterns:</strong><br>
+                    <code class="code-box">blue*</code> Starts with blue | <code class="code-box">*bird</code> Ends with bird<br>
+                    <code class="code-box">bl????rd</code> 4 letters between bl & rd | <code class="code-box">//fuljyo</code> Unscramble<br>
+                    <code class="code-box">?????,*y*</code> 5 letters containing y<br><hr>
+                    <strong>Symbols:</strong><br>
+                    <code>?</code> letter | <code>*</code> letters | <code>#</code> consonant | <code>@</code> vowel<br>
+                    <code>-abcd</code> disallow | <code>+abcd</code> restrict
+                </div>
             </div>
         </div>
 
-        <div class="nav-item">
-            <span class="nav-label">Reverse Dictionary</span>
-            <div class="nav-tooltip">
-                <strong>Reverse Search:</strong><br>
-                Describe a concept to find the word.<br>
-                Example: <code class="rule">:winter sport</code> or <code class="rule">bl*:snow</code> (starts with "bl" related to "snow")
+        <div class="nav-group">
+            <span class="main-link">Reverse Dictionary</span>
+            <div class="help-trigger">?
+                <div class="info-popover">
+                    <strong>Reverse Search:</strong><br>
+                    Describe a concept to find the word.<br>
+                    Example: <code class="code-box">:winter sport</code> or <code class="code-box">bl*:snow</code>
+                </div>
             </div>
         </div>
 
-        <div class="nav-item">
-            <span class="nav-label">Concept Association</span>
-            <div class="nav-tooltip">
-                <strong>Clustering:</strong><br>
-                Finds adjectives for nouns, related verbs, and words in the same semantic field.
+        <div class="nav-group">
+            <span class="main-link">Concept Association</span>
+            <div class="help-trigger">?
+                <div class="info-popover">
+                    <strong>Clustering:</strong><br>
+                    Finds adjectives for nouns, related verbs, and semantic field links.
+                </div>
             </div>
         </div>
 
-        <div class="nav-item">
-            <span class="nav-label">Idioms & Phrases</span>
-            <div class="nav-tooltip">
-                <strong>Phrases:</strong><br>
-                <code class="rule">**winter**</code>: Phrases containing "winter"<br>
-                <code class="rule">expand:nasa</code>: Phrases that spell out N.A.S.A.
+        <div class="nav-group">
+            <span class="main-link">Idioms & Phrases</span>
+            <div class="help-trigger">?
+                <div class="info-popover">
+                    <strong>Phrases:</strong><br>
+                    <code class="code-box">**winter**</code> Phrases with "winter"<br>
+                    <code class="code-box">expand:nasa</code> Spell out N.A.S.A.
+                </div>
             </div>
         </div>
     </div>

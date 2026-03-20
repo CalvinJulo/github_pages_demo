@@ -4,10 +4,42 @@ title: Datamuse & OneLook Hub
 ---
 
 <div id="onelook-section" style="margin-bottom: 40px; font-family: sans-serif;">
+
+    # head
     <h2 style="border-bottom: 2px solid #007bff; padding-bottom: 10px;">🔍 Section 1: Deep Definition</h2>
-    <p style="color: #666; font-size: 0.9em; margin-top: -5px;">
-        Aggregated results from Oxford, Cambridge, Merriam-Webster, and more.
-    </p>
+
+    # introduction
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 20px 0; font-size: 0.85rem; line-height: 1.4;">
+        
+        <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; border: 1px solid #e9ecef;">
+            <strong style="color: #007bff; display: block; margin-bottom: 5px;">Dictionary Aggregator</strong>
+            Single access point for Oxford, Cambridge, Collins, and 100+ authoritative sources.
+        </div>
+
+        <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; border: 1px solid #e9ecef;">
+            <strong style="color: #007bff; display: block; margin-bottom: 5px;">Wildcard Guide</strong>
+            • <code>*</code> : Any number of letters (e.g., <code>bl*y</code>)<br>
+            • <code>?</code> : Exactly one letter (e.g., <code>h?t</code>)<br>
+            • <code>#</code> : Any vowel (e.g., <code>f#t</code>)
+        </div>
+
+        <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; border: 1px solid #e9ecef;">
+            <strong style="color: #007bff; display: block; margin-bottom: 5px;">Reverse Dictionary</strong>
+            Describe a concept to find the word. (e.g., search "feeling of great joy" to find "elation").
+        </div>
+
+        <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; border: 1px solid #e9ecef;">
+            <strong style="color: #007bff; display: block; margin-bottom: 5px;">Concept Association</strong>
+            Clusters words by semantic fields: Adjectives for nouns, related verbs, and topical links.
+        </div>
+
+        <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; border: 1px solid #e9ecef;">
+            <strong style="color: #007bff; display: block; margin-bottom: 5px;">Idioms & Phrases</strong>
+            Supports multi-word expressions and slang definitions across global English databases.
+        </div>
+    </div>
+
+    # Search label
 
     <div style="display: flex; gap: 10px; margin-bottom: 20px;">
         <input type="text" id="onelook-input" placeholder="Enter word or phrase (e.g., resilient)" 
@@ -17,6 +49,8 @@ title: Datamuse & OneLook Hub
             Look Up
         </button>
     </div>
+
+    # Show box
 
     <div id="onelook-container" style="position: relative; width: 100%; height: 750px; border: 1px solid #ddd; border-radius: 8px; overflow: hidden; background: #ffffff;">
         <div id="onelook-loader" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;">

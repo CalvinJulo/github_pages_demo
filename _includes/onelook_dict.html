@@ -1,0 +1,71 @@
+---
+layout: default
+title: Datamuse & OneLook Hub
+---
+
+<div id="onelook-section" style="margin-bottom: 40px; font-family: sans-serif;">
+    <h2 style="border-bottom: 2px solid #007bff; padding-bottom: 10px;">🔍 Section 1: Deep Definition</h2>
+    <p style="color: #666; font-size: 0.9em; margin-top: -5px;">
+        Aggregated results from Oxford, Cambridge, Merriam-Webster, and more.
+    </p>
+
+    <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+        <input type="text" id="onelook-input" placeholder="Enter word or phrase (e.g., resilient)" 
+               style="flex: 1; padding: 12px; font-size: 1.1rem; border: 1px solid #ccc; border-radius: 6px; outline: none;">
+        <button onclick="searchOneLook()" 
+                style="padding: 10px 25px; background: #007bff; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; transition: background 0.3s;">
+            Look Up
+        </button>
+    </div>
+
+    <div id="onelook-container" style="position: relative; width: 100%; height: 750px; border: 1px solid #ddd; border-radius: 8px; overflow: hidden; background: #ffffff;">
+        <div id="onelook-loader" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;">
+            <div class="spinner" style="border: 4px solid #f3f3f3; border-top: 4px solid #007bff; border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; margin: 0 auto 10px;"></div>
+            <p style="color: #888; font-size: 0.9em;">Connecting to OneLook database...</p>
+        </div>
+        
+        <iframe id="onelook-frame" src="about:blank" 
+                style="width: 100%; height: 100%; border: none;" 
+                onload="hideLoader()">
+        </iframe>
+    </div>
+</div>
+
+<style>
+    /* Simple spinner animation */
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+    #onelook-input:focus {
+        border-color: #007bff !important;
+        box-shadow: 0 0 5px rgba(0,123,255,0.2);
+    }
+</style>
+
+<script>
+    function searchOneLook() {
+        const word = document.getElementById('onelook-input').value.trim();
+        const frame = document.getElementById('onelook-frame');
+        const loader = document.getElementById('onelook-loader');
+
+        if (word) {
+            loader.style.display = 'block';
+            // Constructing the OneLook URL
+            frame.src = `https://www.onelook.com/?w=${encodeURIComponent(word)}`;
+        } else {
+            alert("Please enter a word to search.");
+        }
+    }
+
+    function hideLoader() {
+        document.getElementById('onelook-loader').style.display = 'none';
+    }
+
+    // Support Enter key for searching
+    document.getElementById('onelook-input').addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            searchOneLook();
+        }
+    });
+</script>

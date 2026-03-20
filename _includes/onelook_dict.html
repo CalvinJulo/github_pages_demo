@@ -1,7 +1,10 @@
 
 <div id="onelook-section" style="margin-bottom: 30px; font-family: 'Inter', sans-serif;">
+    <!-- # head -->
 
     <h2 style="border-bottom: 2px solid #007bff; padding-bottom: 10px; color: #2d3436; font-size: 1.5rem;">🔍 Section 1: Deep Definition</h2>
+        
+    <!-- # introduction -->
 
     <div style="display: flex; flex-wrap: wrap; gap: 12px; margin: 20px 0;">
         
@@ -9,8 +12,7 @@
             <span class="lex-label">Dictionary Aggregator</span>
             <div class="lex-q">?
                 <div class="lex-tooltip">
-                    <strong>Aggregator</strong><br>
-                    Combined results from 100+ authoritative sources.
+                    Aggregated results from Oxford, Cambridge, Merriam-Webster, and more.
                 </div>
             </div>
         </div>
@@ -30,8 +32,7 @@
             <span class="lex-label">Reverse Dictionary</span>
             <div class="lex-q">?
                 <div class="lex-tooltip">
-                    <strong>Reverse Search:</strong><br>
-                    Describe concepts: <code>:winter sport</code> or <code>feeling of joy</code>
+                    Input a description (such as large yellow fruit), and return the word (banana).
                 </div>
             </div>
         </div>
@@ -40,7 +41,7 @@
             <span class="lex-label">Concept Association</span>
             <div class="lex-q">?
                 <div class="lex-tooltip">
-                    <strong>Context:</strong> Clusters related verbs and semantic adjectives.
+                    Categorizes the results into "Adjectives", "Nouns", and "Verbs".
                 </div>
             </div>
         </div>
@@ -49,27 +50,12 @@
             <span class="lex-label">Idioms & Phrases</span>
             <div class="lex-q">?
                 <div class="lex-tooltip">
-                    <strong>Phrases:</strong> <code>**winter**</code> or <code>expand:nasa</code>
                 </div>
             </div>
         </div>
     </div>
 
-    <div style="display: flex; gap: 10px; margin-bottom: 20px;">
-        <input type="text" id="onelook-input" placeholder="Query word, pattern, or concept..." 
-               style="flex: 1; padding: 12px 15px; border: 1px solid #ddd; border-radius: 6px; font-size: 1rem; outline: none;">
-        <button onclick="searchOneLook()" 
-                style="padding: 0 25px; background: #007bff; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">
-            SEARCH
-        </button>
-    </div>
-
-    <div style="width: 100%; height: 750px; border: 1px solid #eee; border-radius: 8px; overflow: hidden; background: #fff;">
-        <iframe id="onelook-frame" src="about:blank" style="width: 100%; height: 100%; border: none;"></iframe>
-    </div>
-</div>
-
-<style>
+    <style>
     /* THE GRAY BOX (Capsule) */
     .lex-capsule {
         position: relative;
@@ -137,6 +123,26 @@
         font-family: monospace;
     }
 </style>
+
+    <!-- # Search label -->
+
+
+    <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+        <input type="text" id="onelook-input" placeholder="Query word, pattern, or concept..." 
+               style="flex: 1; padding: 12px 15px; border: 1px solid #ddd; border-radius: 6px; font-size: 1rem; outline: none;">
+        <button onclick="searchOneLook()" 
+                style="padding: 0 25px; background: #007bff; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">
+            SEARCH
+        </button>
+    </div>
+
+    <div style="width: 100%; height: 750px; border: 1px solid #eee; border-radius: 8px; overflow: hidden; background: #fff;">
+        <iframe id="onelook-frame" src="about:blank" style="width: 100%; height: 100%; border: none;"></iframe>
+    </div>
+</div>
+
+
+<!-- # Show box -->
 
 <script>
     function searchOneLook() {

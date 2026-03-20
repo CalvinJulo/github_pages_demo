@@ -9,3 +9,4 @@ title: English Learning Hub
 
 1. [📚 English Textbook Library](./library)
 2. [✍️ Vocabulary Practice Lab](./practice)
+3. [Dictionary](./dictionary)

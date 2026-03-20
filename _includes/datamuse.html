@@ -4,50 +4,96 @@
 
     <h2 style="border-bottom: 2px solid #007bff; padding-bottom: 10px; color: #2d3436; font-size: 1.5rem;">🔍 Section 2: Smart Lexicon</h2>
 
-    
-
-    <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
-        <div class="lex-capsule active-mode" data-mode="ml">
-            Means like
+    <div style="margin-bottom: 20px;">
+        <div class="lex-capsule" style="background: #e9ecef; border: 1px solid #dee2e6; display: inline-flex;">
+            <span class="lex-label" style="color: #495057; font-weight: 500;">Means like</span>
             <div class="lex-q">?
-                <div class="lex-tooltip"><b>Meaning:</b> Finds words with a similar meaning.</div>
+                <div class="lex-tooltip">
+                    <strong>Means Like (ml):</strong><br>
+                    Finds words with a similar meaning. Great for finding the "exact" word on the tip of your tongue.
+                </div>
             </div>
         </div>
-        
-        <div class="lex-capsule" data-mode="rel_jja">
-            Adj for Noun
-            <div class="lex-q">?
-                <div class="lex-tooltip"><b>Rel_jja:</b> Popular adjectives used to modify the noun.</div>
-            </div>
-        </div>
-
-        <div class="lex-capsule" data-mode="rel_trg">
-            Triggers
-            <div class="lex-q">?
-                <div class="lex-tooltip"><b>Rel_trg:</b> Words statistically associated with the query.</div>
-            </div>
-        </div>
-        
-        </div>
-
-    <div style="display: flex; gap: 0; margin-bottom: 30px;">
-        <input type="text" id="dm-input" placeholder="Enter word to explore relations..." 
-               style="flex: 1; padding: 12px; border: 1px solid #ddd; border-radius: 4px 0 0 4px; outline: none;">
-        <button onclick="runDatamuse()" style="padding: 0 25px; background: #28a745; color: white; border: none; border-radius: 0 4px 4px 0; cursor: pointer;">EXPLORE</button>
     </div>
 
-    <div id="dm-results" style="display: flex; flex-wrap: wrap; gap: 8px;">
+    <div style="display: flex; gap: 0; margin-bottom: 25px; border: 1px solid #ddd; border-radius: 6px; overflow: hidden;">
+        <input type="text" id="dm-ml-input" placeholder="Enter a concept (e.g., 'ringing in the ears' or 'joy')..." 
+               style="flex: 1; padding: 14px; border: none; font-size: 1rem; outline: none;">
+        <button onclick="fetchMeansLike()" 
+                style="padding: 0 30px; background: #28a745; color: white; border: none; cursor: pointer; font-weight: 600;">
+            EXPLORE
+        </button>
+    </div>
+
+    <div id="dm-ml-results" style="display: flex; flex-wrap: wrap; gap: 12px;">
         </div>
+
+
+
 </div>
 
-<style>
-    .dm-word-box {
-        background: #e9ecef;
-        padding: 8px 15px;
-        border-radius: 3px;
-        font-size: 0.9rem;
-        cursor: pointer;
-        position: relative;
+async function fetchMeansLike() {
+    const input = document.getElementById('dm-ml-input').value.trim();
+    const container = document.getElementById('dm-ml-results');
+    
+    if (!input) return;
+    container.innerHTML = 'Searching...';
+
+    try {
+        // 请求 API，附带 metadata: d (定义), p (词性), s (词频)
+        const response = await fetch(`https://api.datamuse.com/words?ml=${encodeURIComponent(input)}&md=dps&max=20`);
+        const data = await response.json();
+
+        container.innerHTML = ''; // 清空加载状态
+
+        data.forEach(item => {
+            const capsule = document.createElement('div');
+            capsule.className = 'lex-capsule result-item';
+            
+            // 获取音标 (如果有) 或频率
+            const freq = item.score ? `Score: ${item.score}` : '';
+            const pos = item.tags ? item.tags[0] : 'n/a';
+            const def = item.defs ? item.defs[0].split('\t')[1] : 'No definition available.';
+
+            capsule.innerHTML = `
+                <span class="lex-label">${item.word}</span>
+                <div class="lex-q">?
+                    <div class="lex-tooltip">
+                        <strong>${item.word.toUpperCase()}</strong><br>
+                        <i>[${pos}]</i><br>
+                        <span style="display:block; margin-top:5px; font-weight:300;">${def}</span>
+                        <code style="display:block; margin-top:8px; color:#0056b3; font-weight:700;">${freq}</code>
+                    </div>
+                </div>
+            `;
+            container.appendChild(capsule);
+        });
+    } catch (error) {
+        container.innerHTML = 'Error fetching data.';
+        console.error(error);
     }
-    .dm-word-box:hover { background: #dee2e6; }
+}
+
+
+<style>
+    /* 结果方块：灰色矩形 */
+    .result-item {
+        background: #dcdcdc !important; /* 匹配你给的灰色参考图 */
+        border-radius: 2px !important;
+        min-width: 100px;
+        padding: 8px 20px !important;
+    }
+
+    /* Tooltip 浅色主题：黑色瘦体字 + 深蓝加粗 */
+    .lex-tooltip {
+        background: #f5f7f9 !important; /* 淡灰色背景 */
+        color: #2d3436 !important;     /* 黑色瘦体字 */
+        font-weight: 300 !important;
+        border: 1px solid #d1d9e0 !important;
+    }
+
+    .lex-tooltip strong {
+        color: #004085 !important; /* 深蓝色加粗标题 */
+        font-weight: 700 !important;
+    }
 </style>

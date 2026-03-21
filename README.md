@@ -28,18 +28,7 @@ Site generator
 ### Datamuse
 - https://www.datamuse.com/
 - https://www.onelook.com/
-- 
 
-. (Root)
-├── _config.yml      
-├── _data/           
-├── _includes/  
-    ├── page1
-    ├── page2
-├── _layouts/             
-├── function/ 
-    ├── web1
-    ├── web2
-└── index.md
+
 
 

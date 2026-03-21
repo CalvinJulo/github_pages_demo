@@ -1,143 +1,336 @@
-<div id="dm-section-ml" style="margin-top: 50px; font-family: 'Inter', system-ui, sans-serif;">
-    
-    <h2 style="border-bottom: 2px solid #28a745; padding-bottom: 10px; color: #2d3436; font-size: 1.5rem; margin-bottom: 25px; font-weight: 500;">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  	 <h2 style="border-bottom: 2px solid #28a745; padding-bottom: 10px; color: #2d3436; font-size: 1.5rem; margin-bottom: 25px; font-weight: 500;">
         🧠 Section 2: Smart Lexicon
     </h2>
 
-    <div style="margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
-        <span style="font-size: 0.8rem; color: #636e72; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Current Mode:</span>
-        <div class="lex-capsule" style="background: #007bff; color: white; border: none; min-width: auto; padding: 5px 15px; height: auto; min-height: 28px;">
-            <span class="lex-label" style="color: white; font-size: 0.75rem;">Means like</span>
-            <div class="lex-q" style="background: rgba(255,255,255,0.2); top: 0; right: 0; position: relative; margin-left: 8px; width: 14px; height: 14px; font-size: 9px;">?
-                <div class="lex-tooltip">
-                    <strong>MEANS LIKE (ML)</strong><br>
-                    Finds words with a similar meaning.
-                </div>
-            </div>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Datamuse Lexicon Engine Pro</title>
+    <style>
+        /* Core Layout */
+        #lexicon-engine {
+            max-width: 1250px;
+            margin: 20px auto;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            color: #2c3e50;
+            line-height: 1.1;
+        }
+
+        /* Search Bar */
+        .main-search-wrap {
+            display: flex;
+            border: 2px solid #2c3e50;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        #dm-input {
+            flex: 1;
+            padding: 12px 15px;
+            border: none;
+            outline: none;
+            font-size: 1rem;
+        }
+        .main-search-btn {
+            padding: 0 30px;
+            background: #2c3e50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+        .main-search-btn:hover { background: #34495e; }
+
+        /* Sections */
+        .f-section { margin-bottom: 20px; }
+        .f-head { 
+            font-size: 10px; 
+            font-weight: 900; 
+            color: #bdc3c7; 
+            letter-spacing: 2px; 
+            margin-bottom: 6px; 
+            border-bottom: 1px solid #f5f5f5; 
+            padding-bottom: 2px;
+            text-transform: uppercase;
+        }
+        .f-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .f-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+        
+        .sub-box { 
+            background: #fff; 
+            border: 1px solid #f1f1f1; 
+            padding: 8px; 
+            border-radius: 2px; 
+            transition: 0.2s; 
+        }
+        .sub-box:hover { border-color: #3498db; }
+        
+        .api-label { 
+            display: inline-block; 
+            font-size: 9px; 
+            color: #3498db; 
+            text-decoration: none; 
+            font-weight: 800; 
+            margin-bottom: 6px; 
+            text-transform: uppercase; 
+            background: #f0f7fd; 
+            padding: 2px 5px; 
+            border-radius: 2px;
+        }
+        .api-label:hover { background: #3498db; color: #fff; }
+        
+        .tag-wrap { 
+            display: flex; 
+            flex-wrap: wrap; 
+            gap: 3px; 
+            max-height: 120px; 
+            overflow-y: auto; 
+            align-content: flex-start; 
+        }
+
+        /* Thinner Scrollbar Implementation */
+        .tag-wrap::-webkit-scrollbar { width: 2px; }
+        .tag-wrap::-webkit-scrollbar-track { background: transparent; }
+        .tag-wrap::-webkit-scrollbar-thumb { background: #e0e0e0; border-radius: 1px; }
+        .tag-wrap::-webkit-scrollbar-thumb:hover { background: #bdc3c7; }
+
+        .mini-tag { 
+            position: relative; 
+            font-size: 11px; 
+            background: #f9f9f9; 
+            padding: 2px 6px; 
+            border-radius: 2px; 
+            color: #333; 
+            cursor: default; 
+            border: 1px solid #eee; 
+        }
+        .mini-tag:hover { background: #ececec; border-color: #ddd; }
+        
+        /* Tooltip Definitions */
+        .tip { 
+            visibility: hidden; 
+            position: absolute; 
+            bottom: 125%; 
+            left: 0; 
+            background: #2c3e50; 
+            color: #fff; 
+            padding: 8px 12px; 
+            border-radius: 4px; 
+            width: 220px; 
+            font-size: 11px; 
+            z-index: 999; 
+            opacity: 0; 
+            transition: opacity 0.2s; 
+            pointer-events: none; 
+            line-height: 1.4; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .mini-tag:hover .tip { visibility: visible; opacity: 1; }
+
+        /* F6 Laboratory Area */
+        .f6-lab-container {
+            margin-top: 40px;
+            padding: 20px;
+            background: #f8f9fa;
+            border: 1px dashed #cbd5e0;
+            border-radius: 8px;
+        }
+        .f6-input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+        #f6-input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 0.9rem;
+            outline: none;
+        }
+        #f6-input:focus { border-color: #e17055; }
+        .f6-btn {
+            padding: 0 25px;
+            background: #e17055;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .f6-btn:hover { background: #d35400; }
+        .f6-hint { font-size: 11px; color: #7f8c8d; margin-bottom: 12px; }
+    </style>
+</head>
+<body>
+
+<div id="lexicon-engine">
+    
+    <div class="main-search-wrap">
+        <input type="text" id="dm-input" placeholder="Enter word (e.g. 'Ocean')...">
+        <button class="main-search-btn" onclick="window.exploreAll()">EXPLORE ALL</button>
+    </div>
+
+    <div class="f-section">
+        <div class="f-head">F1 & F2: CORE SEMANTICS & PHONETICS</div>
+        <div class="f-grid-2">
+            <div class="sub-box"><a id="link-ml" href="#" target="_blank" class="api-label">ml: Means Like 🔗</a><div id="res-ml" class="tag-wrap"></div></div>
+            <div class="sub-box"><a id="link-sl" href="#" target="_blank" class="api-label">sl: Sounds Like 🔗</a><div id="res-sl" class="tag-wrap"></div></div>
         </div>
     </div>
 
-    <div style="display: flex; gap: 0; margin-bottom: 30px; border: 1px solid #ddd; border-radius: 6px; overflow: hidden; background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
-        <input type="text" id="dm-ml-input" placeholder="Enter a concept (e.g., 'joy' or 'ringing in ears')..." 
-               style="flex: 1; padding: 14px 18px; border: none; font-size: 1rem; outline: none;">
-        <button onclick="fetchMeansLike()" 
-                style="padding: 0 30px; background: #28a745; color: white; border: none; cursor: pointer; font-weight: 600; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">
-            Explore
-        </button>
+    <div class="f-section">
+        <div class="f-head">F3: WORD RELATIONS</div>
+        <div class="f-grid-3">
+            <div class="sub-box"><a id="link-syn" href="#" target="_blank" class="api-label">rel_syn: Synonyms 🔗</a><div id="res-syn" class="tag-wrap"></div></div>
+            <div class="sub-box"><a id="link-ant" href="#" target="_blank" class="api-label">rel_ant: Antonyms 🔗</a><div id="res-ant" class="tag-wrap"></div></div>
+            <div class="sub-box"><a id="link-trg" href="#" target="_blank" class="api-label">rel_trg: Triggers 🔗</a><div id="res-trg" class="tag-wrap"></div></div>
+            <div class="sub-box"><a id="link-spc" href="#" target="_blank" class="api-label">rel_spc: Hypernyms 🔗</a><div id="res-spc" class="tag-wrap"></div></div>
+            <div class="sub-box"><a id="link-gen" href="#" target="_blank" class="api-label">rel_gen: Hyponyms 🔗</a><div id="res-gen" class="tag-wrap"></div></div>
+            <div class="sub-box"><a id="link-com" href="#" target="_blank" class="api-label">rel_com: Holonyms 🔗</a><div id="res-com" class="tag-wrap"></div></div>
+            <div class="sub-box"><a id="link-par" href="#" target="_blank" class="api-label">rel_par: Meronyms 🔗</a><div id="res-par" class="tag-wrap"></div></div>
+            <div class="sub-box"><a id="link-jja" href="#" target="_blank" class="api-label">rel_jja: Noun by Adj 🔗</a><div id="res-jja" class="tag-wrap"></div></div>
+            <div class="sub-box"><a id="link-jjb" href="#" target="_blank" class="api-label">rel_jjb: Adj for Noun 🔗</a><div id="res-jjb" class="tag-wrap"></div></div>
+            <div class="sub-box"><a id="link-hom" href="#" target="_blank" class="api-label">rel_hom: Homophones 🔗</a><div id="res-hom" class="tag-wrap"></div></div>
+            <div class="sub-box"><a id="link-cns" href="#" target="_blank" class="api-label">rel_cns: Consonant 🔗</a><div id="res-cns" class="tag-wrap"></div></div>
+            <div class="sub-box"><a id="link-rhy" href="#" target="_blank" class="api-label">rel_rhy: Rhymes 🔗</a><div id="res-rhy" class="tag-wrap"></div></div>
+            <div class="sub-box" style="background: #f0f9ff;"><a id="link-bga" href="#" target="_blank" class="api-label">rel_bga: Followers 🔗</a><div id="res-bga" class="tag-wrap"></div></div>
+            <div class="sub-box" style="background: #f0f9ff;"><a id="link-bgb" href="#" target="_blank" class="api-label">rel_bgb: Predecessors 🔗</a><div id="res-bgb" class="tag-wrap"></div></div>
+        </div>
     </div>
 
-    <div id="dm-ml-results" style="display: flex; flex-wrap: wrap; gap: 12px;">
+    <div class="f-section">
+        <div class="f-head">F4: CONTEXTUAL DISCOVERY</div>
+        <div class="f-grid-3">
+            <div class="sub-box" style="border-top: 2px solid #1dd1a1;"><a id="link-topics" href="#" target="_blank" class="api-label">topics: Topic Words 🔗</a><div id="res-topics" class="tag-wrap"></div></div>
+            <div class="sub-box" style="border-top: 2px solid #f1c40f;"><a id="link-lc" href="#" target="_blank" class="api-label">lc: Left Context 🔗</a><div id="res-lc" class="tag-wrap"></div></div>
+            <div class="sub-box" style="border-top: 2px solid #f39c12;"><a id="link-rc" href="#" target="_blank" class="api-label">rc: Right Context 🔗</a><div id="res-rc" class="tag-wrap"></div></div>
         </div>
+    </div>
+
+    <div class="f-section">
+        <div class="f-head">F5: DICTIONARY DATA</div>
+        <div class="sub-box" style="border-left: 3px solid #e17055; background: #fffaf9;">
+            <a id="link-meta" href="#" target="_blank" class="api-label" style="color:#e17055;">qe: Definitions & POS 🔗</a>
+            <div id="res-meta" class="tag-wrap"></div>
+        </div>
+    </div>
+
+    <div class="f6-lab-container">
+        <div class="f-head" style="color: #2c3e50; border-color: #2c3e50;">F6: CUSTOM API SANDBOX</div>
+        <div class="f6-input-group">
+            <div style="padding: 10px; background: #eee; border-radius: 4px; font-family: monospace; font-size: 0.9rem; color: #666;">/words?</div>
+            <input type="text" id="f6-input" placeholder="e.g. ml=ocean&sp=t*&max=20">
+            <button class="f6-btn" onclick="window.runF6()">RUN F6</button>
+        </div>
+        <div class="f6-hint">
+            Input custom Datamuse parameters. Metadata <code>&md=dps</code> is auto-appended for tooltips.
+        </div>
+        <div class="sub-box" style="min-height: 80px; background: white;">
+            <a id="link-f6" href="#" target="_blank" class="api-label">CUSTOM RESULT URL 🔗</a>
+            <div id="res-f6" class="tag-wrap" style="max-height: 300px;"></div>
+        </div>
+    </div>
 </div>
 
-<style>
-    /* 基础灰色方块样式 */
-    .lex-capsule {
-        position: relative;
-        background: #dcdcdc; /* 浅灰色背景 */
-        color: #333;
-        padding: 10px 25px;
-        font-size: 0.85rem;
-        font-weight: 500;
-        border-radius: 2px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        min-width: 120px;
-        cursor: default;
-    }
-
-    /* 右上角问号 */
-    .lex-q {
-        position: absolute;
-        top: -2px;
-        right: -2px;
-        width: 16px;
-        height: 16px;
-        background: #999;
-        color: white;
-        font-size: 10px;
-        font-weight: bold;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: help;
-    }
-
-    /* 悬停提示框：淡灰色背景，黑色瘦体字 */
-    .lex-tooltip {
-        visibility: hidden;
-        opacity: 0;
-        position: absolute;
-        top: 25px;
-        left: 50%;
-        transform: translateX(-50%);
-        background: #f5f7f9; /* 淡灰色背景 */
-        color: #2d3436;      /* 黑色字 */
-        padding: 15px;
-        border-radius: 6px;
-        width: 280px;
-        font-size: 11px;
-        font-weight: 300;    /* 瘦体字 */
-        line-height: 1.6;
-        z-index: 1000;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        border: 1px solid #d1d9e0;
-        transition: opacity 0.2s;
-        pointer-events: none;
-    }
-
-    .lex-q:hover .lex-tooltip {
-        visibility: visible;
-        opacity: 1;
-    }
-
-    /* 提示框内加粗变深蓝 */
-    .lex-tooltip strong {
-        color: #004085;
-        font-weight: 700;
-        display: block;
-        margin-bottom: 5px;
-    }
-</style>
-
 <script>
-    async function fetchMeansLike() {
-        const query = document.getElementById('dm-ml-input').value.trim();
-        const container = document.getElementById('dm-ml-results');
-        
-        if (!query) return;
-        container.innerHTML = '<p style="font-size:0.8rem; color:#999;">Searching...</p>';
+    (function() {
+        const API = "https://api.datamuse.com/words";
 
-        try {
-            const response = await fetch(`https://api.datamuse.com/words?ml=${encodeURIComponent(query)}&md=dps&max=18`);
-            const data = await response.json();
+        window.fetchData = async function(url, resId) {
+            const container = document.getElementById(resId);
+            if(!container) return;
+            
+            container.innerHTML = '<span style="color:#eee; font-size:9px;">Searching...</span>';
+            try {
+                const res = await fetch(url);
+                const data = await res.json();
+                
+                container.innerHTML = data.length ? '' : '<span style="color:#f0f0f0; font-size:9px;">None Found</span>';
+                
+                data.forEach(item => {
+                    const rawDef = (item.defs && item.defs.length) ? item.defs[0] : '';
+                    const cleanDef = rawDef.includes('\t') ? rawDef.split('\t')[1] : (rawDef || 'No definition available.');
+                    
+                    const tag = document.createElement('div');
+                    tag.className = 'mini-tag';
+                    tag.innerHTML = `${item.word}<div class="tip"><strong>${item.word.toUpperCase()}</strong><br>${cleanDef}</div>`;
+                    container.appendChild(tag);
+                });
+            } catch(e) {
+                container.innerHTML = '<span style="color:#e74c3c; font-size:9px;">API Error</span>';
+            }
+        };
 
-            container.innerHTML = ''; 
+        window.exploreAll = function() {
+            const w = document.getElementById('dm-input').value.trim();
+            if(!w) return;
 
-            data.forEach(item => {
-                const pos = item.tags ? `<i>(${item.tags[0]})</i>` : '';
-                const def = item.defs ? item.defs[0].split('\t')[1] : 'No definition.';
-                const score = item.score ? `Score: ${item.score}` : '';
+            const loadBase = (param, resId, linkId) => {
+                const url = `${API}?${param}=${encodeURIComponent(w)}&md=dps&max=100`;
+                document.getElementById(linkId).href = url;
+                window.fetchData(url, resId);
+            };
 
-                const capsule = document.createElement('div');
-                capsule.className = 'lex-capsule';
-                capsule.innerHTML = `
-                    <span class="lex-label">${item.word}</span>
-                    <div class="lex-q">?
-                        <div class="lex-tooltip">
-                            <strong>${item.word.toUpperCase()}</strong>
-                            ${pos}<br>
-                            <span style="display:block; margin: 8px 0;">${def}</span>
-                            <code style="color:#0056b3; font-weight:700;">${score}</code>
-                        </div>
-                    </div>
-                `;
-                container.appendChild(capsule);
+            const loadContext = (param, resId, linkId) => {
+                const url = `${API}?${param}=${encodeURIComponent(w)}&sp=*&md=dps&max=100`;
+                document.getElementById(linkId).href = url;
+                window.fetchData(url, resId);
+            };
+
+            loadBase('ml', 'res-ml', 'link-ml');
+            loadBase('sl', 'res-sl', 'link-sl');
+
+            const relCodes = ['syn','ant','trg','spc','gen','com','par','jja','jjb','hom','cns','rhy','bga','bgb'];
+            relCodes.forEach(code => {
+                loadBase(`rel_${code}`, `res-${code}`, `link-${code}`);
             });
-        } catch (error) {
-            container.innerHTML = '<p style="color:red;">API Error.</p>';
-        }
-    }
+
+            loadContext('topics', 'res-topics', 'link-topics');
+            loadContext('lc', 'res-lc', 'link-lc');
+            loadContext('rc', 'res-rc', 'link-rc');
+
+            const qeUrl = `${API}?sp=${encodeURIComponent(w)}&md=dps&qe=1&max=1`;
+            document.getElementById('link-meta').href = qeUrl;
+            window.fetchData(qeUrl, 'res-meta');
+        };
+
+        window.runF6 = function() {
+            const queryText = document.getElementById('f6-input').value.trim();
+            if(!queryText) return;
+
+            let finalUrl = `${API}?${queryText}`;
+            if (!queryText.includes('md=')) {
+                finalUrl += `&md=dps`;
+            }
+
+            document.getElementById('link-f6').href = finalUrl;
+            window.fetchData(finalUrl, 'res-f6');
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const mainInp = document.getElementById('dm-input');
+            const f6Inp = document.getElementById('f6-input');
+
+            if(mainInp) {
+                mainInp.addEventListener('keypress', (e) => {
+                    if(e.key === 'Enter') window.exploreAll();
+                });
+            }
+            if(f6Inp) {
+                f6Inp.addEventListener('keypress', (e) => {
+                    if(e.key === 'Enter') window.runF6();
+                });
+            }
+        });
+    })();
 </script>
+
+</body>
+</html>
+    

@@ -4,7 +4,7 @@ layout: default
 title: English Learning Hub
 ---
 
-# English Learning Hub
+# Practice Hub
 
 ## Table of Contents
 

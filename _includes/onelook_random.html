@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OneLook Auto Shuffler</title>
+    <style>
+        :root {
+            --bg: #ffffff;
+            --text: #1a1a1b;
+            --accent: #338cf0;
+            --border: #d3d6da;
+            --header-h: 60px;
+        }
+
+        body, html { margin: 0; padding: 0; height: 100%; font-family: 'Clear Sans', Arial, sans-serif; overflow: hidden; }
+
+        /* Header Navigation */
+        .header {
+            position: fixed; top: 0; left: 0; width: 100%; height: var(--header-h);
+            background: #fff; border-bottom: 1px solid var(--border);
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 20px; z-index: 100; box-sizing: border-box;
+        }
+
+        .left-group { display: flex; align-items: center; gap: 15px; }
+        .right-group { display: flex; align-items: center; gap: 15px; }
+
+        /* Button Style */
+        .btn-random {
+            background: var(--text); color: white; text-decoration: none;
+            padding: 10px 22px; border-radius: 4px; font-size: 13px;
+            font-weight: 800; text-transform: uppercase; letter-spacing: 1px;
+            transition: 0.2s; cursor: pointer; border: none;
+        }
+        .btn-random:hover { background: var(--accent); }
+
+        /* Auto Controls Style */
+        .auto-controls {
+            display: flex; align-items: center; gap: 8px;
+            font-size: 11px; font-weight: 800; color: #787c7e;
+            text-transform: uppercase; border-left: 1px solid #eee; padding-left: 15px;
+        }
+        
+        input[type="number"] {
+            width: 45px; border: 1px solid var(--border); border-radius: 4px;
+            padding: 4px; font-weight: 700; text-align: center;
+        }
+
+        /* Status Indicator Dot */
+        #status-dot {
+            width: 8px; height: 8px; background: #ccc; border-radius: 50%;
+            display: inline-block; transition: 0.3s;
+        }
+        .active #status-dot { background: #2ecc71; box-shadow: 0 0 8px #2ecc71; }
+
+        /* Content Viewport */
+        .view-container { padding-top: var(--header-h); width: 100vw; height: 100vh; box-sizing: border-box; }
+        iframe { width: 100%; height: 100%; border: none; background: #f9f9f9; }
+
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="left-group">
+            <a href="https://www.onelook.com/random" 
+               target="view-frame" 
+               id="randomBtn"
+               class="btn-random">
+               Shuffle Word
+            </a>
+        </div>
+
+        <div class="right-group" id="ctrlGroup">
+            <div class="auto-controls">
+                <span id="status-dot"></span>
+                <span>Interval (s):</span>
+                <input type="number" id="intervalInput" value="5" min="2">
+                <label style="cursor: pointer; display: flex; align-items: center; gap: 5px;">
+                    <input type="checkbox" id="autoSwitch"> Auto Mode
+                </label>
+            </div>
+        </div>
+    </header>
+
+    <main class="view-container">
+        <iframe src="https://www.onelook.com/random" name="view-frame" id="olFrame"></iframe>
+    </main>
+
+    <script>
+        const randomBtn = document.getElementById('randomBtn');
+        const autoSwitch = document.getElementById('autoSwitch');
+        const intervalInput = document.getElementById('intervalInput');
+        const ctrlGroup = document.getElementById('ctrlGroup');
+        let autoTimer = null;
+
+        // Core Logic: Automation sequence
+        function startAuto() {
+            stopAuto(); // Clear existing timers first
+            const seconds = Math.max(parseFloat(intervalInput.value) || 5, 2); // Minimum 2s safety limit
+            
+            autoTimer = setInterval(() => {
+                randomBtn.click(); // Trigger the Shuffle link
+            }, seconds * 1000);
+            
+            ctrlGroup.classList.add('active');
+        }
+
+        function stopAuto() {
+            if (autoTimer) clearInterval(autoTimer);
+            ctrlGroup.classList.remove('active');
+        }
+
+        // Toggle Switch Listener
+        autoSwitch.addEventListener('change', (e) => {
+            if (e.target.checked) {
+                startAuto();
+            } else {
+                stopAuto();
+            }
+        });
+
+        // Interval Change Listener (Apply changes immediately if active)
+        intervalInput.addEventListener('change', () => {
+            if (autoSwitch.checked) startAuto();
+        });
+
+        // Keyboard Shortcut: Spacebar
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space') {
+                e.preventDefault(); // Prevent page scroll
+                randomBtn.click();
+                // Reset timer on manual press to prevent instant double-skips
+                if (autoSwitch.checked) startAuto();
+            }
+        });
+
+        // Focus Guard: Ensure keyboard shortcuts work even if iframe captures focus
+        setInterval(() => {
+            if (document.activeElement.tagName === 'IFRAME') {
+                window.focus();
+            }
+        }, 1000);
+    </script>
+</body>
+</html>

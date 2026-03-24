@@ -9,6 +9,6 @@ title: English Learning Hub
 ## Table of Contents
 
 1. [vocabulary_learn](./_includes/vocabulary_learn.html)
-2. [✍️ onelook_random](./includes/onelook_random)
-3. [📚 onelook_games](../includes/onelook_games.html)
+2. [✍️ onelook_random](./_includes/onelook_random.html)
+3. [📚 onelook_games](./_includes/onelook_games.html)
 

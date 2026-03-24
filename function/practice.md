@@ -1,13 +1,14 @@
+
 ---
 layout: default
-title: Lexicon Hub Dashboard
+title: English Learning Hub
 ---
 
-<div id="lexicon-dashboard" style="max-width: 1100px; margin: 0 auto;">
+# English Learning Hub
 
+## Table of Contents
 
-{% include vocabulary_learn.html %}
-{% include onelook_random.html %}
-{% include onelook_games.html %}
+1. [vocabulary_learn](../includes/vocabulary_learn.html)
+2. [✍️ onelook_random](../includes/onelook_random.html)
+3. [📚 onelook_games](../includes/onelook_games.html)
 
-</div>

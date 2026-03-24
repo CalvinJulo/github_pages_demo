@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OneLook Games Portal</title>
+    <style>
+        :root {
+            --bg-light: #f4f7f9;
+            --text-dark: #333;
+            --header-h: 80px;
+        }
+
+        body, html { 
+            margin: 0; padding: 0; height: 100%; 
+            font-family: 'Inter', -apple-system, sans-serif; 
+            background: var(--bg-light); color: var(--text-dark);
+        }
+
+        .header {
+            position: fixed; top: 0; width: 100%; height: var(--header-h);
+            background: #fff; display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            z-index: 1000; box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+        }
+        .header-text { font-size: 14px; color: #777; font-weight: 500; margin-top: 5px; }
+        .logo { font-size: 22px; font-weight: 900; letter-spacing: -1px; text-transform: uppercase; }
+        .logo span { color: #ff0000; }
+
+        .grid-container {
+            padding: calc(var(--header-h) + 40px) 20px 60px;
+            max-width: 1100px; margin: 0 auto;
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .game-card {
+            height: 240px; border-radius: 16px; cursor: pointer;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            text-decoration: none; text-align: center; color: white;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative; overflow: hidden; border: none; outline: none;
+        }
+
+        .game-card:hover { transform: scale(1.03); box-shadow: 0 15px 35px rgba(0,0,0,0.15); }
+
+        .game-card h2 { font-size: 26px; font-weight: 800; margin: 0; letter-spacing: -0.5px; }
+        .game-card p { font-size: 15px; margin: 12px 0 25px; font-weight: 500; opacity: 0.95; }
+
+        .play-now {
+            background: #fff; padding: 12px 45px; border-radius: 6px;
+            font-size: 14px; font-weight: 800; border: none;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            cursor: pointer;
+        }
+
+        /* Gradient Themes */
+        .theme-red { background: linear-gradient(135deg, #ff0033, #ff5e62); }
+        .theme-red .play-now { color: #ff0033; }
+
+        .theme-gold { background: linear-gradient(135deg, #ff9900, #ffcc33); }
+        .theme-gold .play-now { color: #ff9900; }
+
+        .theme-blue { background: linear-gradient(135deg, #0033ff, #3399ff); }
+        .theme-blue .play-now { color: #0033ff; }
+
+        .theme-purple { background: linear-gradient(135deg, #9900cc, #da70d6); }
+        .theme-purple .play-now { color: #9900cc; }
+
+        .theme-green { background: linear-gradient(135deg, #00ad00, #32cd32); }
+        .theme-green .play-now { color: #00ad00; }
+
+        .theme-coral { background: linear-gradient(135deg, #f08080, #ff6b6b); }
+        .theme-coral .play-now { color: #f08080; }
+
+        #game-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: white; z-index: 2000; display: none; flex-direction: column;
+        }
+        .overlay-header {
+            height: 50px; background: #111; display: flex; 
+            align-items: center; justify-content: space-between; padding: 0 20px;
+        }
+        .close-btn { 
+            color: #fff; font-weight: 800; cursor: pointer; 
+            background: none; border: 1px solid #444; padding: 5px 15px; border-radius: 4px;
+        }
+        iframe { width: 100%; flex-grow: 1; border: none; background: #fff; }
+
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <div class="logo">OneLook <span>Games</span></div>
+    <div class="header-text">Human word games for curious minds. Free of ads, but full of whimsy.</div>
+</header>
+
+<main class="grid-container" id="game-grid">
+    </main>
+
+<div id="game-overlay">
+    <div class="overlay-header">
+        <span id="playing-title" style="color: #888; font-size: 11px; font-weight: 700; text-transform: uppercase;">Playing Game</span>
+        <button class="close-btn" onclick="closeGame()">CLOSE ✕</button>
+    </div>
+    <iframe id="game-iframe"></iframe>
+</div>
+
+<script>
+    const GAMES = [
+        { 
+            title: "Cadgy (NEW!)", 
+            hint: "Fun is a 5-letter word", 
+            url: "https://onelook.com/cadgy", 
+            theme: "theme-red" 
+        },
+        { 
+            title: "Threepeat", 
+            hint: "Find common ground", 
+            url: "https://onelook.com/threepeat", 
+            theme: "theme-gold" 
+        },
+        { 
+            title: "Compound Your Joy", 
+            hint: "Find connection", 
+            url: "https://www.onelook.com/?loc=rd&w=cyj", 
+            theme: "theme-blue" 
+        },
+        { 
+            title: "Pandergram", 
+            hint: "Foster inclusion", 
+            url: "https://onelook.com/pandergram", 
+            theme: "theme-purple" 
+        },
+        { 
+            title: "Twisteroo", 
+            hint: "Make it fit", 
+            url: "https://twisteroo.com/", 
+            theme: "theme-green" 
+        },
+        { 
+            title: "Banish Your Fears", 
+            hint: "What are you afraid of?", 
+            url: "https://onelook.com/byf", 
+            theme: "theme-coral" 
+        }
+    ];
+
+    const grid = document.getElementById('game-grid');
+    const overlay = document.getElementById('game-overlay');
+    const iframe = document.getElementById('game-iframe');
+
+    function renderGames() {
+        grid.innerHTML = GAMES.map((game) => `
+            <div class="game-card ${game.theme}" onclick="launchGame('${game.url}', '${game.title}')">
+                <h2>${game.title}</h2>
+                <p>${game.hint}</p>
+                <button class="play-now">Play Now</button>
+            </div>
+        `).join('');
+    }
+
+    function launchGame(url, title) {
+        document.getElementById('playing-title').innerText = "Playing: " + title;
+        iframe.src = url;
+        overlay.style.display = 'flex';
+    }
+
+    function closeGame() {
+        overlay.style.display = 'none';
+        iframe.src = '';
+    }
+
+    renderGames();
+</script>
+
+</body>
+</html>

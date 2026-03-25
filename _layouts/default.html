@@ -7,7 +7,7 @@
         body, html { margin: 0; padding: 0; height: 100%; font-family: -apple-system, sans-serif; overflow: hidden; }
         .portal { display: flex; height: 100vh; width: 100vw; }
         
-        /* 左侧目录 */
+        /* Right table of content */
         #sidebar {
             width: 280px; background: #f9f9f9; border-right: 1px solid #eee;
             transition: 0.3s; display: flex; flex-direction: column; flex-shrink: 0;
@@ -15,7 +15,7 @@
         #sidebar.hidden { margin-left: -280px; }
         .nav-content { padding: 20px 15px; flex-grow: 1; overflow-y: auto; }
         
-        /* 目录样式：可折叠大标题 & 子标题 */
+        /* Table of content sample：fold title & Subtitle */
         .category-header {
             display: flex; justify-content: space-between; align-items: center;
             padding: 10px; margin-top: 5px; border-radius: 6px;
@@ -42,11 +42,11 @@
         }
         .sub-menu a:hover { background: #fff; color: #007bff; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
 
-        /* 右侧展示区 */
+        /* Right display */
         #stage { flex-grow: 1; position: relative; background: #fff; }
         iframe { width: 100%; height: 100%; border: none; padding-top: 60px; box-sizing: border-box; }
 
-        /* 隐藏按钮 */
+        /* Hidden button */
         #toggle-menu {
             position: absolute; left: 15px; top: 15px; z-index: 100;
             background: #333; color: #fff; border: none; padding: 8px 12px;

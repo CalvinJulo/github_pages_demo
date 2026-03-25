@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{{ page.title }}</title>
+    <style>
+        body, html { margin: 0; padding: 0; height: 100%; font-family: -apple-system, sans-serif; overflow: hidden; }
+        .portal { display: flex; height: 100vh; width: 100vw; }
+        
+        /* 左侧目录 */
+        #sidebar {
+            width: 280px; background: #f9f9f9; border-right: 1px solid #eee;
+            transition: 0.3s; display: flex; flex-direction: column; flex-shrink: 0;
+        }
+        #sidebar.hidden { margin-left: -280px; }
+        .nav-content { padding: 20px 15px; flex-grow: 1; overflow-y: auto; }
+        
+        /* 目录样式：可折叠大标题 & 子标题 */
+        .category-header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 10px; margin-top: 5px; border-radius: 6px;
+            cursor: pointer; transition: background 0.2s;
+        }
+        .category-header:hover { background: #eee; }
+        .category-title {
+            text-decoration: none; color: #333; font-size: 15px; font-weight: bold; flex-grow: 1;
+        }
+        .category-title:hover { color: #007bff; }
+        .category-toggle {
+            font-size: 12px; color: #666; transition: transform 0.3s; padding: 4px; border-radius: 4px;
+        }
+        .category-toggle:hover { background: #ddd; }
+        .category-header.collapsed .category-toggle { transform: rotate(-90deg); }
+        
+        .sub-menu { list-style: none; padding: 0 0 0 24px; margin: 5px 0; overflow: hidden; transition: max-height 0.3s; }
+        .sub-menu.collapsed { max-height: 0; margin: 0; }
+        
+        .sub-menu li { margin-bottom: 2px; }
+        .sub-menu a { 
+            text-decoration: none; color: #555; font-size: 14px; font-weight: 500; 
+            display: block; padding: 8px 10px; border-radius: 6px; transition: 0.2s;
+        }
+        .sub-menu a:hover { background: #fff; color: #007bff; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+
+        /* 右侧展示区 */
+        #stage { flex-grow: 1; position: relative; background: #fff; }
+        iframe { width: 100%; height: 100%; border: none; padding-top: 60px; box-sizing: border-box; }
+
+        /* 隐藏按钮 */
+        #toggle-menu {
+            position: absolute; left: 15px; top: 15px; z-index: 100;
+            background: #333; color: #fff; border: none; padding: 8px 12px;
+            cursor: pointer; border-radius: 6px; font-size: 18px; box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        #toggle-menu:hover { background: #555; }
+    </style>
+    <script>
+        function toggleCategory(id, event) {
+            // Prevent toggling if the title link itself was clicked
+            if (event && event.target.tagName === 'A') return;
+            
+            const header = document.getElementById('header-' + id);
+            const menu = document.getElementById('menu-' + id);
+            header.classList.toggle('collapsed');
+            if (menu.classList.contains('collapsed')) {
+                menu.classList.remove('collapsed');
+                menu.style.maxHeight = menu.scrollHeight + "px";
+            } else {
+                menu.classList.add('collapsed');
+                menu.style.maxHeight = "0px";
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="portal">
+        <nav id="sidebar">
+            <div class="nav-content">
+                {{ content }}
+            </div>
+        </nav>
+        <main id="stage">
+            <button id="toggle-menu" onclick="document.getElementById('sidebar').classList.toggle('hidden')">☰</button>
+            <iframe name="main-stage" src=""></iframe>
+        </main>
+    </div>
+</body>
+</html>
